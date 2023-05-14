@@ -1,5 +1,6 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { DetalleVentaEntity } from "../detalle_venta/detalle_venta.entity";
+import { EmpleadoEntity } from "../empleado/empleado.entity";
 
 @Entity({ name: 'venta' })
 export class VentaEntity {
@@ -15,9 +16,13 @@ export class VentaEntity {
     @Column({ type: 'varchar', length: 40 })
     fecha: string;
 
-    @Column({ type: 'int', nullable: false, unique: false })
+    @Column({ type: 'double', nullable: false, unique: false })
     total: number;
 
     @OneToMany(() => DetalleVentaEntity, detalleVenta => detalleVenta.venta, { cascade: true })
     detalleVenta: DetalleVentaEntity[];
+
+    @ManyToOne(() => EmpleadoEntity, empleado => empleado.ventas)
+    @JoinColumn({ name: 'codEmpleado' })
+    empleado: EmpleadoEntity;
 }

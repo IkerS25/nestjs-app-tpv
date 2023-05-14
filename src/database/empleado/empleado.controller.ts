@@ -13,8 +13,8 @@ export class EmpleadoController {
     }
 
     @Get(':id')
-    async getOne(@Param('id', ParseIntPipe) id: number) {
-        return await this.empleadoService.findById(id);
+    async getOne(@Param('cod', ParseIntPipe) cod: number) {
+        return await this.empleadoService.findByCod(cod);
     }
 
     @UsePipes(new ValidationPipe({ whitelist: true }))
@@ -30,7 +30,7 @@ export class EmpleadoController {
     }
 
     @Delete(':id')
-    async delete(@Param('id', ParseIntPipe) id: number) {
-        return await this.empleadoService.delete(id)
+    async delete(@Param('id', ParseIntPipe) cod: number) {
+        return await this.empleadoService.delete(cod)
     }
 }

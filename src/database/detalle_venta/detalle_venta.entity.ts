@@ -1,5 +1,6 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, PrimaryColumn, ManyToOne } from "typeorm";
 import { VentaEntity } from "../venta/venta.entity";
+import { ProductoEntity } from "../producto/producto.entity";
 
 @Entity({ name: 'detalleVenta' })
 export class DetalleVentaEntity {
@@ -24,4 +25,8 @@ export class DetalleVentaEntity {
     @OneToOne(() => VentaEntity, venta => venta.detalleVenta, { primary: true })
     @JoinColumn({ name: 'idVenta' })
     venta: VentaEntity;
+
+    @ManyToOne(() => ProductoEntity, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'idProducto' })
+    producto: ProductoEntity;
 }

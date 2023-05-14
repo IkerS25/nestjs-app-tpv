@@ -1,14 +1,15 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
 import { VentaEntity } from "../venta/venta.entity";
 
 @Entity({ name: 'empleado' })
 export class EmpleadoEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+
+    @PrimaryColumn({ type: 'int', nullable: false, unique: true })
+    codEmpleado: number;
 
     @Column({ type: 'varchar', length: 30, nullable: false, unique: true })
     nombre: string;
 
-    @Column({ type: 'int', nullable: false, unique: true })
-    codEmpleado: number;
+    @OneToMany(() => VentaEntity, venta => venta.empleado)
+    ventas: VentaEntity[];
 }
