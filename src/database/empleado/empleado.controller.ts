@@ -13,7 +13,7 @@ export class EmpleadoController {
     }
 
     @Get(':id')
-    async getOne(@Param('cod', ParseIntPipe) cod: number) {
+    async getOne(@Param('id', ParseIntPipe) cod: number) {
         return await this.empleadoService.findByCod(cod);
     }
 

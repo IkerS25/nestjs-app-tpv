@@ -32,7 +32,7 @@ export class DetalleVentaService {
     async create(dto: DetalleVentaDto): Promise<any> {
         const detalle_venta = this.detalleVentaRepository.create(dto);
         await this.detalleVentaRepository.save(detalle_venta);
-        return new MessageDto(`La venta se ha realizado correctamente`);
+        return new MessageDto(`El detalle venta se ha realizado correctamente`);
     }
 
     async update(id: number, dto: DetalleVentaDto): Promise<any> {

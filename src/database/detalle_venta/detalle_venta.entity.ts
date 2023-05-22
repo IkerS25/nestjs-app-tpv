@@ -7,14 +7,14 @@ export class DetalleVentaEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: 'int', nullable: false, unique: false })
+    @Column({ type: 'int', })
     idVenta: number;
 
     @Column({ type: 'int', nullable: false, unique: false })
-    idProducto?: string;
+    idProducto?: number;
 
     @Column({ type: 'int', nullable: false, unique: false })
-    cantidad?: string;
+    cantidad?: number;
 
     @Column({ type: 'int', nullable: false, unique: false })
     precio_unitario: number;
@@ -22,7 +22,7 @@ export class DetalleVentaEntity {
     @Column({ type: 'int', nullable: true, unique: false })
     total_linea: number;
 
-    @OneToOne(() => VentaEntity, venta => venta.detalleVenta, { primary: true })
+    @ManyToOne(() => VentaEntity, venta => venta.detalleVenta)
     @JoinColumn({ name: 'idVenta' })
     venta: VentaEntity;
 
