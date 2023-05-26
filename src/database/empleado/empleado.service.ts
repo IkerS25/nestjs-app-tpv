@@ -20,14 +20,14 @@ export class EmpleadoService {
         }
         return list;
     }
-
-    async findByCod(cod: number): Promise<EmpleadoEntity> {
-        const empleado = await this.empleadoRepository.findOne(cod);
+    async findById(codEmpleado: number): Promise<EmpleadoEntity> {
+        const empleado = await this.empleadoRepository.findOne(codEmpleado);
         if (!empleado) {
             throw new NotFoundException(new MessageDto('El empleado no existe'));
         }
         return empleado;
     }
+
 
     async findByNombre(nombre: string): Promise<EmpleadoEntity> {
         const empleado = await this.empleadoRepository.findOne({ nombre: nombre });
@@ -39,25 +39,27 @@ export class EmpleadoService {
         if (exists) throw new BadRequestException(new MessageDto('El nombre del empleado ya existe'));
         const empleado = this.empleadoRepository.create(dto);
         await this.empleadoRepository.save(empleado);
-        return new MessageDto(`El empleado ${empleado.nombre} ha sido creado`);
+        return new MessageDto(`El empleado ${empleado.nombre} creado`);
     }
 
-    async update(cod: number, dto: EmpleadoDto): Promise<any> {
-        const empleado = await this.findByCod(cod);
-        if (!empleado)
+    async update(codEmpleado: number, dto: EmpleadoDto): Promise<any> {
+        const empleado = await this.findById(codEmpleado);
+        if (!empleado) {
             throw new NotFoundException(new MessageDto('El empleado no existe'));
+        }
         const exists = await this.findByNombre(dto.nombre);
-        if (exists && exists.codEmpleado !== cod) throw new BadRequestException(new MessageDto('El empleado ya existe'));
-        dto.nombre ? empleado.nombre = dto.nombre : empleado.nombre = empleado.nombre;
-        dto.codEmpleado ? empleado.codEmpleado = dto.codEmpleado : empleado.codEmpleado = empleado.codEmpleado;
-
+        if (exists && exists.codEmpleado !== codEmpleado) {
+            throw new BadRequestException(new MessageDto('El empleado ya existe'));
+        }
+        dto.nombre ? (empleado.nombre = dto.nombre) : (empleado.nombre = empleado.nombre);
+        dto.codEmpleado ? (empleado.codEmpleado = dto.codEmpleado) : (empleado.codEmpleado = empleado.codEmpleado);
 
         await this.empleadoRepository.save(empleado);
-        return new MessageDto(`El empleado  ${empleado.nombre} ha sido actualizado`);
+        return new MessageDto(`El empleado ${empleado.nombre} ha sido actualizado`);
     }
 
-    async delete(cod: number): Promise<any> {
-        const empleado = await this.findByCod(cod);
+    async delete(codEmpleado: number): Promise<any> {
+        const empleado = await this.findById(codEmpleado);
         await this.empleadoRepository.delete(empleado);
         return new MessageDto(`El empleado ${empleado.nombre} ha sido eliminado`);
     }
