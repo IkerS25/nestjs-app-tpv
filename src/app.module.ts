@@ -30,7 +30,7 @@ import { DetalleVentaModule } from './database/detalle_venta/detalle_venta.modul
         password: configService.get<string>(DB_PASSWORD),
         database: configService.get<string>(DB_DATABASE),
         entities: [__dirname + '/database/**/*.entity{.ts,.js}'],
-        synchronize: true,
+        synchronize: false,
         logging: false,
         timezone: 'Europe/Madrid'
       }),
