@@ -8,8 +8,8 @@ import { HttpsOptions } from '@nestjs/common/interfaces/external/https-options.i
 
 
 const httpsOptions: HttpsOptions = {
-  key: fs.readFileSync('/etc/letsencrypt/live/mycloudtpv.hopto.org/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/mycloudtpv.hopto.org/fullchain.pem')
+  key: fs.readFileSync('privkey.pem'),
+  cert: fs.readFileSync('fullchain.pem')
 };
 
 async function bootstrap() {
