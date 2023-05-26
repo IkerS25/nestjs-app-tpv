@@ -7,13 +7,13 @@ import * as fs from 'fs';
 import { HttpsOptions } from '@nestjs/common/interfaces/external/https-options.interface';
 
 
-// const httpsOptions: HttpsOptions = {
-//   key: fs.readFileSync('/etc/letsencrypt/live/mycloudtpv.hopto.org/privkey.pem'),
-//   cert: fs.readFileSync('/etc/letsencrypt/live/mycloudtpv.hopto.org/fullchain.pem')
-// };
+const httpsOptions: HttpsOptions = {
+  key: fs.readFileSync('/etc/letsencrypt/live/mycloudtpv.hopto.org/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/mycloudtpv.hopto.org/fullchain.pem')
+};
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule, { httpsOptions, cors: true });
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   const configService = app.get(ConfigService);
 
